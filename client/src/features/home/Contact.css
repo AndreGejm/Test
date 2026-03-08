@@ -1,0 +1,110 @@
+.contact-section {
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    padding-bottom: 0;
+}
+
+.contact-container {
+    display: flex;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-top: 4rem;
+    margin-bottom: 6rem;
+}
+
+.contact-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.contact-info h3 {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+    letter-spacing: 2px;
+}
+
+.contact-info p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-top: 3rem;
+}
+
+.social-link {
+    font-family: var(--font-heading);
+    letter-spacing: 2px;
+    font-size: 1rem;
+    color: var(--text-main);
+    position: relative;
+    /* Ensure minimum tap target */
+    padding: 0.25rem 0;
+    display: inline-block;
+}
+
+.social-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.social-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.booking-widget-placeholder {
+    flex: 1;
+    min-width: 0;
+    background-color: var(--bg-surface-light);
+    border: 1px solid #333;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.widget-title {
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    margin-bottom: 1rem;
+}
+
+.widget-mock p {
+    color: var(--text-muted);
+}
+
+.footer {
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--bg-color);
+}
+
+.footer p {
+    font-family: var(--font-heading);
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+        margin-bottom: 3rem;
+    }
+}

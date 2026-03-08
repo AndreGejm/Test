@@ -136,7 +136,7 @@ if (require.main === module) {
     // Validate environment before starting — only on direct server launch, not test imports
     require('./validate-env')();
 
-    const PORT = process.env.PORT || 3001;
+    const PORT = process.env.PORT || 8080;
     const server = app.listen(PORT, '0.0.0.0', () => {
         console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
     });

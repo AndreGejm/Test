@@ -1,0 +1,258 @@
+.reviews-section-container {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+@media (min-width: 900px) {
+    .reviews-section-container {
+        grid-template-columns: 320px 1fr;
+        gap: 4rem;
+    }
+}
+
+.reviews-summary-panel {
+    position: sticky;
+    top: 6rem;
+}
+
+.loading-text,
+.error-text,
+.no-reviews-text {
+    text-align: center;
+    color: var(--text-muted);
+    font-family: var(--font-heading);
+    letter-spacing: 2px;
+    padding: 4rem 0;
+}
+
+.error-text {
+    color: var(--accent-hover);
+}
+
+/* Header & Aggregations */
+.reviews-header {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+}
+
+.rating-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 80px;
+}
+
+.rating-big-number {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--text-main);
+    line-height: 1;
+    margin: 0;
+}
+
+.rating-stars-large {
+    font-size: 1.5rem;
+}
+
+.rating-count {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.star.filled {
+    color: var(--accent-color);
+}
+
+.star.empty {
+    color: var(--border-color);
+}
+
+.histogram {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    /* Was: min-width: 250px — caused overflow on mobile */
+    flex: 1;
+    min-width: 0;
+}
+
+.histogram-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.histogram-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    width: 30px;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.histogram-bar-container {
+    flex: 1;
+    min-width: 0;
+    height: 8px;
+    background-color: var(--bg-surface);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.histogram-bar {
+    height: 100%;
+    background-color: var(--accent-color);
+    transition: width 0.5s ease-out;
+}
+
+.histogram-count {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    width: 20px;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+/* Individual Reviews */
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.review-card {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+}
+
+.review-card:last-child {
+    border-bottom: none;
+}
+
+.review-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.review-author {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--text-main);
+    margin: 0 0 0.25rem 0;
+}
+
+.review-stars {
+    font-size: 0.9rem;
+}
+
+.review-date {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.review-title {
+    color: var(--text-main);
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+}
+
+.review-comment {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Admin Reply */
+.review-reply {
+    margin-top: 1.5rem;
+    background-color: var(--bg-surface-light);
+    padding: 1.5rem;
+    border-left: 2px solid var(--border-color);
+}
+
+.reply-author {
+    font-family: var(--font-heading);
+    color: var(--text-main);
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 1px;
+}
+
+.reply-content {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.load-more-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* SCROLLABLE PANEL UI */
+.reviews-list-panel {
+    position: relative;
+    background-color: var(--bg-surface-light);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.reviews-list-scroll-area {
+    max-height: 520px;
+    /* ~3 reviews target desktop */
+    overflow-y: auto;
+    padding: 2rem;
+    padding-bottom: 5rem;
+    /* clear gradient affordance */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+
+@media (max-width: 899px) {
+    .reviews-list-scroll-area {
+        max-height: 420px;
+        /* Mobile target */
+        padding: 1.5rem;
+        padding-bottom: 4rem;
+    }
+}
+
+.reviews-list-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.reviews-list-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.reviews-list-scroll-area::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+
+/* Visual scroll affordance gradient */
+.scroll-affordance-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--bg-surface-light) 90%);
+    pointer-events: none;
+    /* Allows clicks on load-more beneath */
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}

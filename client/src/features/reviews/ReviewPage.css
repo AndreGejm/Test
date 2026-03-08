@@ -1,0 +1,207 @@
+.review-page {
+    min-height: 100vh;
+    background: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+.review-page__card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-top: 3px solid var(--accent-color);
+    padding: clamp(2rem, 5vw, 3rem);
+    max-width: 560px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.review-page__brand {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+}
+
+.review-page__card h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.review-page__order-ref {
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.review-page__muted {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.review-page__loading {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 3rem 0;
+    font-family: var(--font-heading);
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.review-page__status-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.review-page__status-icon--success {
+    animation: starPop 0.4s ease;
+}
+
+@keyframes starPop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.review-page__card--error h2 {
+    color: var(--accent-color);
+}
+
+.review-page__card--info h2 {
+    color: var(--text-main);
+}
+
+.review-page__card--success h2 {
+    color: #44cc66;
+}
+
+.review-page__home-btn {
+    margin-top: 1.5rem;
+    display: inline-block;
+}
+
+/* Review Form */
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.review-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.review-form__group label {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.review-form__group .req {
+    color: var(--accent-color);
+}
+
+.review-form__group input,
+.review-form__group textarea {
+    background: var(--bg-surface-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.7rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    min-height: 44px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.review-form__group textarea {
+    resize: vertical;
+}
+
+.review-form__group input:focus,
+.review-form__group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.review-form__group.has-error input,
+.review-form__group.has-error textarea {
+    border-color: var(--accent-hover);
+}
+
+.review-form__error {
+    color: var(--accent-hover);
+    font-size: 0.8rem;
+}
+
+.review-form__char-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: right;
+    opacity: 0.6;
+}
+
+.review-form__server-error {
+    background: rgba(209, 26, 42, 0.1);
+    border-left: 3px solid var(--accent-color);
+    padding: 0.75rem 1rem;
+    color: var(--accent-hover);
+    font-size: 0.9rem;
+}
+
+.review-form__submit {
+    width: 100%;
+    min-height: 50px;
+}
+
+/* Star selector */
+.review-star-selector {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.review-star {
+    background: transparent;
+    border: none;
+    font-size: 2.2rem;
+    color: var(--border-color);
+    cursor: pointer;
+    transition: color 0.15s, transform 0.15s;
+    padding: 0;
+    line-height: 1;
+    min-height: auto;
+}
+
+.review-star.active {
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.review-star:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
