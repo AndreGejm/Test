@@ -1,0 +1,161 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ------------------------------------------------------------------
+// REVIEW MODELS (original public review form)
+// ------------------------------------------------------------------
+
+model Review {
+  id          String   @id @default(uuid())
+  rating      Int
+  title       String?
+  comment     String
+  displayName String
+  email       String
+  status      String   @default("pending") // PENDING, PUBLISHED, REJECTED, DELETED
+  ipAddress   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Optionally linked to a booking order (null for freeform reviews)
+  orderId String? @unique
+  order   Order?  @relation(fields: [orderId], references: [id])
+
+  reply AdminReply?
+}
+
+model AdminReply {
+  id        String   @id @default(uuid())
+  content   String
+  reviewId  String   @unique
+  review    Review   @relation(fields: [reviewId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// BOOKING / ORDER MODELS
+// ------------------------------------------------------------------
+
+// A customer booking request
+model Order {
+  id            String   @id @default(uuid())
+  publicId      String   @unique // ORD-YYYYMMDD-XXXX
+  customerName  String
+  customerEmail String
+  serviceType   String // Mixing | Mastering | Tracking | Complete
+  genre         String?
+  message       String?
+  numSongs      Int?
+  songLength    String? // Stored as string e.g. "3:45" or "225 min"
+  numStems      Int?
+  status        String   @default("PENDING")
+  driveLink     String? // Google Drive folder URL (set manually by admin)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  statusHistory OrderStatusHistory[]
+  reviewToken   ReviewToken?
+  review        Review?
+}
+
+// Every status change is recorded for full audit trail
+model OrderStatusHistory {
+  id         String   @id @default(uuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+  fromStatus String
+  toStatus   String
+  changedBy  String // Admin email
+  message    String? // Optional admin note sent to customer
+  createdAt  DateTime @default(now())
+}
+
+// Single-use hashed token for invite-only review submission
+model ReviewToken {
+  id        String    @id @default(uuid())
+  orderId   String    @unique
+  order     Order     @relation(fields: [orderId], references: [id])
+  tokenHash String    @unique // SHA-256 hash of the plaintext token
+  expiresAt DateTime
+  usedAt    DateTime? // Set atomically when review is submitted
+  createdAt DateTime  @default(now())
+}
+
+// ------------------------------------------------------------------
+// ADMIN / SETTINGS MODELS
+// ------------------------------------------------------------------
+
+model AdminUser {
+  id    String  @id @default(uuid())
+  email String  @unique
+  name  String?
+}
+
+// Site Settings Version History
+model SiteSettingVersion {
+  version   Int      @id @default(autoincrement())
+  payload   String // Serialized JSON string for arbitrary config fields
+  changedBy String // Admin email who initiated the change
+  createdAt DateTime @default(now())
+}
+
+// Portfolio/Work Items Manager
+model WorkItem {
+  id         String   @id @default(uuid())
+  title      String
+  artist     String?
+  role       String // mix, master, edit
+  embedUrl   String // The URL to be embedded (Bandcamp/Soundcloud/YouTube)
+  provider   String // Validated (youtube, bandcamp, soundcloud)
+  status     String   @default("draft") // draft or published
+  orderIndex Int      @default(0) // Control display order
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// System Audit Log for accountability
+model AuditLog {
+  id         String   @id @default(uuid())
+  action     String // e.g., UPDATE_SETTINGS, DELETE_REVIEW, CHANGE_ORDER_STATUS
+  entityId   String? // The ID of the thing modified (if applicable)
+  adminEmail String // Who acted
+  details    String? // Small context serialized JSON
+  timestamp  DateTime @default(now())
+}
+
+// Dev email mailbox — stores outgoing emails when SMTP is not configured
+model DevEmail {
+  id        String   @id @default(uuid())
+  toAddress String
+  subject   String
+  htmlBody  String
+  textBody  String?
+  sentAt    DateTime @default(now())
+}
+
+// System log of outbound email attempts
+model EmailEvent {
+  id            String   @id @default(uuid())
+  timestamp     DateTime @default(now())
+  eventTemplate String? // Optional template ID/Name
+  orderId       String? // Optional link to an Order
+  intendedCount Int      @default(1)
+  intendedTo    String // Redacted (e.g. *******@gmail.com)
+  actualTo      String // Who the email was actually delivered to
+  subject       String
+  status        String // QUEUED, SENT, FAILED, SUPPRESSED
+  errorCode     String?
+  errorSummary  String?
+  requestId     String? // request correlation ID
+}

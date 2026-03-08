@@ -1,0 +1,23 @@
+node_modules
+npm-debug.log
+.env
+.git
+.gitignore
+*.db
+*.db-journal
+test-results
+test-output.txt
+extracted.txt
+Revisions
+Review comments
+_odt_extracted
+_review_bundle
+_review_bundle1.zip
+full_code_base.txt
+generate_bundle.cjs
+restructure-frontend.cjs
+rewrite-index.cjs
+fix-imports.cjs
+extract_odt.cjs
+temp_admin.js
+dist
